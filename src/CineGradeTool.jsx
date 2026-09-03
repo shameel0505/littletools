@@ -299,7 +299,7 @@ export default function CineGradeTool() {
   };
 
   return (
-    <div className="app-container">
+    <div className="cinegrade-page">
       <Helmet>
         <title>CineGrade AI — 1-Click Cinematic Neural Color Grading | LittleTools</title>
         <meta name="description" content="Transform your photos and video footage with Hollywood-grade color palettes. Match iconic movie aesthetics like Dune, Blade Runner, and Oppenheimer, or use the 1-click AI Auto-Grader." />
@@ -319,10 +319,10 @@ export default function CineGradeTool() {
       </Helmet>
 
       {/* Header */}
-      <header className="hero">
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <div className="badge-pill">
-            <Sparkles size={14} className="badge-icon" />
+      <header className="cinegrade-header">
+        <motion.div initial={{ opacity: 0, y: -15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <div className="cinegrade-badge">
+            <Sparkles size={14} />
             <span>AI Neural Color Science & 3D LUT Engine</span>
           </div>
           <h1>CineGrade Studio</h1>
@@ -333,18 +333,18 @@ export default function CineGradeTool() {
       </header>
 
       {/* GPU Connection Banner */}
-      <motion.div className="glass-panel gpu-config-panel" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
-        <div className="gpu-config-left">
-          <div className="gpu-config-title">
-            <Settings size={18} className="icon-accent" />
+      <motion.div className="gpu-banner" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+        <div className="gpu-banner-left">
+          <div className="gpu-banner-title">
+            <Settings size={16} className="icon-accent" />
             <span>GPU Backend Acceleration</span>
           </div>
-          <p className="gpu-config-desc">
+          <p className="gpu-banner-desc">
             Connect to your free Google Colab Cloudflare tunnel for GPU-accelerated 3D LUT generation and 4K batch rendering.
           </p>
         </div>
 
-        <div className="gpu-config-right">
+        <div className="gpu-banner-right">
           <a 
             href="https://colab.research.google.com/github/shameel0505/VideoColorGrading/blob/main/CineGrade_Colab_Backend.ipynb" 
             target="_blank" 
@@ -389,29 +389,29 @@ export default function CineGradeTool() {
       </div>
 
       {!result ? (
-        <div className="studio-layout">
+        <div className="cinegrade-workspace">
           {/* Left Column: Grade Source Selector */}
-          <motion.div className="glass-panel source-panel" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-            <div className="panel-tabs">
+          <motion.div className="tool-card source-panel" initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }}>
+            <div className="cinegrade-tabs">
               <button 
                 className={`tab-btn ${activeTab === 'templates' ? 'active' : ''}`}
                 onClick={() => setActiveTab('templates')}
               >
-                <Film size={16} />
+                <Film size={15} />
                 <span>Movie Looks</span>
               </button>
               <button 
                 className={`tab-btn ${activeTab === 'custom_ref' ? 'active' : ''}`}
                 onClick={() => setActiveTab('custom_ref')}
               >
-                <ImageIcon size={16} />
+                <ImageIcon size={15} />
                 <span>Custom Reference</span>
               </button>
               <button 
                 className={`tab-btn ${activeTab === 'auto_grade' ? 'active' : ''}`}
                 onClick={() => setActiveTab('auto_grade')}
               >
-                <Wand2 size={16} />
+                <Wand2 size={15} />
                 <span>AI Auto-Grader</span>
               </button>
             </div>
@@ -551,7 +551,7 @@ export default function CineGradeTool() {
           </motion.div>
 
           {/* Right Column: Target Media & Tuning Controls */}
-          <motion.div className="glass-panel target-panel" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+          <motion.div className="tool-card target-panel" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }}>
             <h3>2. Upload Your Footage</h3>
             <p className="panel-subtitle">
               Select the photo or video (.mp4, .mov, .dng, .cr2, .nef, .jpg, .png) you want to grade.
@@ -663,11 +663,11 @@ export default function CineGradeTool() {
         </div>
       ) : (
         /* Results View Studio with Interactive Before / After Split Slider */
-        <motion.div className="glass-panel results-studio" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+        <motion.div className="tool-card results-studio" initial={{ opacity: 0, scale: 0.99 }} animate={{ opacity: 1, scale: 1 }}>
           <div className="results-header">
             <div>
-              <div className="badge-pill">
-                <CheckCircle size={14} style={{ color: '#10b981' }} />
+              <div className="cinegrade-badge" style={{ color: 'var(--success)', borderColor: 'rgba(16, 185, 129, 0.3)', background: 'rgba(16, 185, 129, 0.1)' }}>
+                <CheckCircle size={14} />
                 <span>Color Grade Completed</span>
               </div>
               <h2>Studio Render & Comparison</h2>
