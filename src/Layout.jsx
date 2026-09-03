@@ -44,6 +44,7 @@ export default function Layout() {
             <Link to="/bg-remover" className={`nav-link ${location.pathname === '/bg-remover' ? 'active' : ''}`}>BG Remover</Link>
             <Link to="/thumbnail-tester" className={`nav-link ${location.pathname === '/thumbnail-tester' ? 'active' : ''}`}>Thumbnail Tester</Link>
             <Link to="/doc-to-md" className={`nav-link ${location.pathname === '/doc-to-md' ? 'active' : ''}`}>Doc to MD</Link>
+            <Link to="/cinegrade" className={`nav-link ${location.pathname === '/cinegrade' ? 'active' : ''}`}>CineGrade AI</Link>
           </nav>
 
           <div className="header-divider"></div>

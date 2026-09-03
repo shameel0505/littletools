@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Layers, Monitor, ArrowRight, Zap, Shield, Image as ImageIcon, FileText } from 'lucide-react';
+import { Layers, Monitor, ArrowRight, Zap, Shield, Image as ImageIcon, FileText, Film } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import AdBanner from './AdBanner';
 
@@ -93,6 +93,22 @@ export default function Home() {
             <li><Monitor size={14} /> OpenAI Token Estimator</li>
           </ul>
           <Link to="/doc-to-md" className="btn-solid btn-feature">
+            Launch Tool <ArrowRight size={14} />
+          </Link>
+        </div>
+
+        <div className="feature-card">
+          <div className="feature-icon" style={{ backgroundColor: '#f59e0b', color: 'white' }}>
+            <Film size={24} />
+          </div>
+          <h3>CineGrade AI</h3>
+          <p>The industry-standard neural color grading engine. Transform your RAW footage into cinematic masterpieces instantly using Cloud GPU.</p>
+          <ul className="feature-list">
+            <li><Zap size={14}/> Cloud GPU Compute</li>
+            <li><ImageIcon size={14}/> 4.8 GB Neural Models</li>
+            <li><Monitor size={14} /> Download 3D LUT (.cube)</li>
+          </ul>
+          <Link to="/cinegrade" className="btn-solid btn-feature">
             Launch Tool <ArrowRight size={14} />
           </Link>
         </div>

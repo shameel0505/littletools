@@ -5,6 +5,7 @@ import Home from './Home';
 import BgRemoverTool from './BgRemoverTool';
 import ThumbnailStudio from './ThumbnailStudio';
 import DocToMdTool from './DocToMdTool';
+import CineGradeTool from './CineGradeTool';
 import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
 import './index.css';
@@ -19,6 +20,7 @@ function App() {
             <Route path="bg-remover" element={<BgRemoverTool />} />
             <Route path="thumbnail-tester" element={<ThumbnailStudio />} />
             <Route path="doc-to-md" element={<DocToMdTool />} />
+            <Route path="cinegrade" element={<CineGradeTool />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<Terms />} />
             <Route path="*" element={<Navigate to="/" replace />} />
