@@ -248,12 +248,8 @@ export default function CineGradeTool() {
         setProcessingStage('Extracting custom reference chromatic distribution...');
       } else {
         formData.append('mode', 'reference');
+        formData.append('ref_id', selectedRef.id || selectedRef.name);
         setProcessingStage(`Synthesizing 3D LUT from ${selectedRef.name}...`);
-        const refUrl = baseUrl ? `${baseUrl}${selectedRef.path}` : `/tunnel-api${selectedRef.path}`;
-        const refResponse = await fetch(refUrl);
-        const refBlob = await refResponse.blob();
-        const refFile = new File([refBlob], selectedRef.name + '.jpg', { type: 'image/jpeg' });
-        formData.append('reference', refFile);
       }
 
       const gradeEndpoint = baseUrl ? `${baseUrl}/api/grade` : `/tunnel-api/api/grade`;
