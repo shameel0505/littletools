@@ -281,5 +281,25 @@
 @media (max-width: 900px) {
   .doc-workspace {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .doc-to-md-page {
+    padding: 0.5rem;
+    gap: 1.25rem;
+  }
+  
+  .doc-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .doc-header p {
+    font-size: 0.9rem;
+  }
+  
+  .dropzone-area {
+    padding: 1.75rem 1rem;
   }
 }
