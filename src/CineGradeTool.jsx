@@ -83,11 +83,12 @@ export default function CineGradeTool() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 45000);
         
-        const res = await fetch(`/tunnel-api/api/library`, {
+        // Fetch directly from the GPU tunnel or local proxy fallback
+        const targetUrl = baseUrl ? `${baseUrl}/api/library` : '/api/library';
+        const res = await fetch(targetUrl, {
           signal: controller.signal,
           headers: {
-            'Accept': 'application/json',
-            'x-target-url': baseUrl
+            'Accept': 'application/json'
           }
         });
         
@@ -248,20 +249,19 @@ export default function CineGradeTool() {
       } else {
         formData.append('mode', 'reference');
         setProcessingStage(`Synthesizing 3D LUT from ${selectedRef.name}...`);
-        const refResponse = await fetch(`/tunnel-api${selectedRef.path}`, {
-          headers: { 'x-target-url': baseUrl }
-        });
+        const refUrl = baseUrl ? `${baseUrl}${selectedRef.path}` : `/tunnel-api${selectedRef.path}`;
+        const refResponse = await fetch(refUrl);
         const refBlob = await refResponse.blob();
         const refFile = new File([refBlob], selectedRef.name + '.jpg', { type: 'image/jpeg' });
         formData.append('reference', refFile);
       }
 
-      const response = await fetch(`/tunnel-api/api/grade`, {
+      const gradeEndpoint = baseUrl ? `${baseUrl}/api/grade` : `/tunnel-api/api/grade`;
+      const response = await fetch(gradeEndpoint, {
         method: 'POST',
         body: formData,
         headers: {
-          'Accept': 'application/json',
-          'x-target-url': baseUrl
+          'Accept': 'application/json'
         }
       });
 
@@ -276,10 +276,10 @@ export default function CineGradeTool() {
 
       while (true) {
         await new Promise(resolve => setTimeout(resolve, 1500));
-        const statusRes = await fetch(`/tunnel-api/api/status/${taskId}`, {
+        const statusEndpoint = baseUrl ? `${baseUrl}/api/status/${taskId}` : `/tunnel-api/api/status/${taskId}`;
+        const statusRes = await fetch(statusEndpoint, {
           headers: {
-            'Accept': 'application/json',
-            'x-target-url': baseUrl
+            'Accept': 'application/json'
           }
         });
         if (!statusRes.ok) throw new Error(await statusRes.text());
@@ -441,7 +441,7 @@ export default function CineGradeTool() {
                         onClick={() => setSelectedRef(item)}
                       >
                         <img 
-                          src={`/tunnel-api${item.path}?targetUrl=${encodeURIComponent(item.baseUrl || activeBaseUrl)}`} 
+                          src={item.baseUrl ? `${item.baseUrl}${item.path}` : `/tunnel-api${item.path}`} 
                           alt={item.name} 
                           loading="lazy"
                         />
@@ -684,7 +684,7 @@ export default function CineGradeTool() {
             {result.type === 'video' ? (
               <div className="video-player-box">
                 <video 
-                  src={`/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}&targetUrl=${encodeURIComponent(activeBaseUrl)}`} 
+                  src={activeBaseUrl ? `${activeBaseUrl}/api/download?path=${encodeURIComponent(result.output_media)}` : `/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}`} 
                   controls 
                   autoPlay 
                   loop 
@@ -697,7 +697,7 @@ export default function CineGradeTool() {
                 <div className="split-viewer-wrapper" ref={splitContainerRef}>
                   {/* Base Layer: After (Graded Result) */}
                   <img 
-                    src={`/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}&targetUrl=${encodeURIComponent(activeBaseUrl)}`} 
+                    src={activeBaseUrl ? `${activeBaseUrl}/api/download?path=${encodeURIComponent(result.output_media)}` : `/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}`} 
                     alt="Graded Result" 
                     className="split-view-img"
                     draggable={false}
@@ -712,7 +712,7 @@ export default function CineGradeTool() {
                     }}
                   >
                     <img 
-                      src={targetPreview || `/tunnel-api/api/download?path=${encodeURIComponent(result.original_media || result.output_media)}&targetUrl=${encodeURIComponent(activeBaseUrl)}`} 
+                      src={targetPreview || (activeBaseUrl ? `${activeBaseUrl}/api/download?path=${encodeURIComponent(result.original_media || result.output_media)}` : `/tunnel-api/api/download?path=${encodeURIComponent(result.original_media || result.output_media)}`)} 
                       alt="Original Footage" 
                       className="split-view-img"
                       draggable={false}
@@ -744,14 +744,14 @@ export default function CineGradeTool() {
                   <div className="side-box">
                     <div className="side-tag">BEFORE</div>
                     <img 
-                      src={targetPreview || `/tunnel-api/api/download?path=${encodeURIComponent(result.original_media || result.output_media)}&targetUrl=${encodeURIComponent(activeBaseUrl)}`} 
+                      src={targetPreview || (activeBaseUrl ? `${activeBaseUrl}/api/download?path=${encodeURIComponent(result.original_media || result.output_media)}` : `/tunnel-api/api/download?path=${encodeURIComponent(result.original_media || result.output_media)}`)} 
                       alt="Original" 
                     />
                   </div>
                   <div className="side-box">
                     <div className="side-tag graded">AFTER (GRADED)</div>
                     <img 
-                      src={`/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}&targetUrl=${encodeURIComponent(activeBaseUrl)}`} 
+                      src={activeBaseUrl ? `${activeBaseUrl}/api/download?path=${encodeURIComponent(result.output_media)}` : `/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}`} 
                       alt="Graded" 
                     />
                   </div>
@@ -760,7 +760,7 @@ export default function CineGradeTool() {
                 /* Graded Only View */
                 <div className="graded-only-container">
                   <img 
-                    src={`/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}&targetUrl=${encodeURIComponent(activeBaseUrl)}`} 
+                    src={activeBaseUrl ? `${activeBaseUrl}/api/download?path=${encodeURIComponent(result.output_media)}` : `/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}`} 
                     alt="Graded Masterpiece" 
                     className="full-media"
                   />
@@ -780,14 +780,14 @@ export default function CineGradeTool() {
 
             <div className="download-buttons">
               <a 
-                href={`/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}&targetUrl=${encodeURIComponent(activeBaseUrl)}`} 
+                href={activeBaseUrl ? `${activeBaseUrl}/api/download?path=${encodeURIComponent(result.output_media)}` : `/tunnel-api/api/download?path=${encodeURIComponent(result.output_media)}`} 
                 download 
                 className="btn-primary btn-download"
               >
                 <Download size={18} /> Download Graded {result.type === 'video' ? 'Video' : 'Photo'}
               </a>
               <a 
-                href={`/tunnel-api/api/download?path=${encodeURIComponent(result.output_lut)}&targetUrl=${encodeURIComponent(activeBaseUrl)}`} 
+                href={activeBaseUrl ? `${activeBaseUrl}/api/download?path=${encodeURIComponent(result.output_lut)}` : `/tunnel-api/api/download?path=${encodeURIComponent(result.output_lut)}`} 
                 download 
                 className="btn-primary btn-lut"
               >
