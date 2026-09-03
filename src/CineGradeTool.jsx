@@ -480,9 +480,15 @@ export default function CineGradeTool() {
             {/* TAB 2: Custom Reference Upload */}
             {activeTab === 'custom_ref' && (
               <div className="tab-content custom-ref-tab">
-                <p className="tab-desc">
-                  Upload any reference image (from Pinterest, Instagram, or a movie still). The AI will analyze its chromatic harmony and transfer its palette to your target.
-                </p>
+                <div className="custom-ref-hero">
+                  <div className="hero-icon-wrapper">
+                    <ImageIcon size={24} />
+                  </div>
+                  <h3>Match Any Vibe</h3>
+                  <p>
+                    Drop in any image with a color palette you love. The AI will extract its cinematic color grading and apply it directly to your footage.
+                  </p>
+                </div>
 
                 <div 
                   className={`dropzone ref-dropzone ${customRefFile ? 'has-file' : ''}`}
@@ -501,7 +507,8 @@ export default function CineGradeTool() {
                     <div className="custom-preview-container">
                       <img src={customRefPreview} alt="Custom Reference" className="custom-ref-img" />
                       <div className="custom-preview-badge">
-                        <CheckCircle size={14} /> Reference Ready: {customRefFile?.name}
+                        <CheckCircle size={14} className="check-icon" /> 
+                        <span className="badge-text">Reference Ready: {customRefFile?.name}</span>
                       </div>
                     </div>
                   ) : (

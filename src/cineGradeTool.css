@@ -553,7 +553,7 @@
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(6px);
-  padding: 0.25rem 0.75rem;
+  padding: 0.35rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -562,19 +562,31 @@
   align-items: center;
   gap: 0.35rem;
   border: 1px solid rgba(16, 185, 129, 0.3);
+  max-width: 90%;
+  box-sizing: border-box;
+}
+
+.custom-preview-badge .check-icon {
+  flex-shrink: 0;
+}
+
+.custom-preview-badge .badge-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* Auto Grade Tab */
-.auto-grade-banner {
+/* Tab Heroes (Auto Grade & Custom Ref) */
+.auto-grade-banner, .custom-ref-hero {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 1.5rem;
   text-align: center;
+  margin-bottom: 1.25rem;
 }
 
-.auto-grade-hero-icon {
+.auto-grade-hero-icon, .hero-icon-wrapper {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -586,17 +598,17 @@
   margin: 0 auto 1rem;
 }
 
-.auto-grade-banner h3 {
+.auto-grade-banner h3, .custom-ref-hero h3 {
   font-size: 1.15rem;
   color: var(--text-primary);
   margin-bottom: 0.4rem;
 }
 
-.auto-grade-banner p {
+.auto-grade-banner p, .custom-ref-hero p {
   font-size: 0.85rem;
   color: var(--text-secondary);
   max-width: 460px;
-  margin: 0 auto 1.25rem;
+  margin: 0 auto;
   line-height: 1.4;
 }
 
