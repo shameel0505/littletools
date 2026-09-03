@@ -91,19 +91,35 @@ export default function DocToMdTool() {
     localStorage.setItem('docMdHistory', JSON.stringify(newHistory));
   };
 
-  const onDrop = useCallback(async (acceptedFiles) => {
-    if (!acceptedFiles || acceptedFiles.length === 0) return;
+  const onDrop = useCallback(async (acceptedFiles, fileRejections) => {
+    // Combine accepted files and any files rejected purely by OS MIME discrepancy
+    const rejectedFiles = fileRejections ? fileRejections.map(r => r.file) : [];
+    const allCandidateFiles = [...(acceptedFiles || []), ...rejectedFiles];
+    
+    // Filter by allowed extensions (.pdf, .docx, .xlsx, .xls, .csv, .txt, .md, .json, .png, .jpg, .jpeg, .webp)
+    const validExtensions = ['pdf', 'docx', 'xlsx', 'xls', 'csv', 'txt', 'md', 'json', 'rtf', 'png', 'jpg', 'jpeg', 'webp'];
+    const filesToProcess = allCandidateFiles.filter(file => {
+      const ext = file.name.split('.').pop().toLowerCase();
+      return validExtensions.includes(ext);
+    });
+
+    if (!filesToProcess || filesToProcess.length === 0) {
+      if (allCandidateFiles.length > 0) {
+        showToast('Please upload supported document formats (PDF, Word, Excel, CSV, Text, Images).');
+      }
+      return;
+    }
 
     setIsProcessing(true);
-    setBatchStatus({ current: 1, total: acceptedFiles.length, currentFileName: acceptedFiles[0].name });
+    setBatchStatus({ current: 1, total: filesToProcess.length, currentFileName: filesToProcess[0].name });
     setProgress({ text: 'Preparing documents...', percent: 5 });
 
     const newResults = [];
 
-    for (let i = 0; i < acceptedFiles.length; i++) {
-      const file = acceptedFiles[i];
-      setBatchStatus({ current: i + 1, total: acceptedFiles.length, currentFileName: file.name });
-      setProgress({ text: `Parsing file ${i + 1} of ${acceptedFiles.length}: ${file.name}...`, percent: 10 });
+    for (let i = 0; i < filesToProcess.length; i++) {
+      const file = filesToProcess[i];
+      setBatchStatus({ current: i + 1, total: filesToProcess.length, currentFileName: file.name });
+      setProgress({ text: `Parsing file ${i + 1} of ${filesToProcess.length}: ${file.name}...`, percent: 10 });
 
       try {
         const parsedMd = await parseDocumentToMarkdown(file, (p) => {
@@ -141,19 +157,11 @@ export default function DocToMdTool() {
     setProcessedFiles(newResults);
     setSelectedFileIndex(0);
     setIsProcessing(false);
-    showToast(`Successfully processed ${acceptedFiles.length} document${acceptedFiles.length > 1 ? 's' : ''}!`);
+    showToast(`Successfully processed ${filesToProcess.length} document${filesToProcess.length > 1 ? 's' : ''}!`);
   }, [history]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
-      'application/pdf': ['.pdf'],
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
-      'text/csv': ['.csv'],
-      'text/plain': ['.txt'],
-      'image/*': ['.png', '.jpg', '.jpeg', '.webp']
-    },
     multiple: true
   });
 
