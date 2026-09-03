@@ -1189,6 +1189,8 @@
   .yt-studio {
     border-radius: var(--radius-md);
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
   }
 
   .studio-bar {
@@ -1203,6 +1205,15 @@
     align-items: stretch;
     gap: 0.6rem;
     width: 100%;
+  }
+
+  .studio-bar-right {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
   .studio-heading {
@@ -1239,11 +1250,18 @@
     flex: 1.2;
     min-width: 130px;
     padding: 0.35rem 0.5rem;
+    display: flex;
+    align-items: center;
   }
 
   .slider-input {
+    flex: 1;
     width: 100%;
     min-width: 50px;
+  }
+
+  .icon-toggle-btn {
+    flex-shrink: 0;
   }
 
   .input-deck {
@@ -1252,10 +1270,27 @@
     gap: 1rem;
   }
 
+  .meta-row {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .simulator-stage {
+    padding: 0.75rem 0.5rem;
+    min-height: auto !important;
+    border-radius: var(--radius-md);
+  }
+
+  .yt-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    width: 100%;
+  }
+
   .desktop-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
-    padding: 0.5rem;
+    padding: 0.25rem;
   }
 
   .yt-sidebar-layout {

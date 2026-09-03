@@ -4,8 +4,14 @@ import mammoth from 'mammoth';
 import TurndownService from 'turndown';
 import * as XLSX from 'xlsx';
 
-// Initialize PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+// Initialize PDF.js worker with robust CDN / local fallback
+if (typeof window !== 'undefined') {
+  try {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker || `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs`;
+  } catch (e) {
+    console.warn("Worker setup warning:", e);
+  }
+}
 
 const isMobileDevice = () => {
   return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
@@ -99,8 +105,19 @@ const parsePDF = async (file, setProgress) => {
   if (setProgress) setProgress({ text: 'Loading PDF document...', percent: 15 });
   const arrayBuffer = await file.arrayBuffer();
   
-  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer, useSystemFonts: true });
-  const pdf = await loadingTask.promise;
+  let pdf;
+  try {
+    const loadingTask = pdfjsLib.getDocument({
+      data: arrayBuffer,
+      useSystemFonts: true,
+      stopAtErrors: false
+    });
+    pdf = await loadingTask.promise;
+  } catch (loadErr) {
+    console.warn("Primary PDF load warning, retrying with raw data:", loadErr);
+    const retryTask = pdfjsLib.getDocument(new Uint8Array(arrayBuffer));
+    pdf = await retryTask.promise;
+  }
   
   let fullText = '';
   let scannedPagesCount = 0;
@@ -108,24 +125,42 @@ const parsePDF = async (file, setProgress) => {
   
   for (let i = 1; i <= pdf.numPages; i++) {
     if (setProgress) setProgress({ text: `Parsing page ${i} of ${pdf.numPages}...`, percent: 15 + (60 * (i/pdf.numPages)) });
-    const page = await pdf.getPage(i);
-    const textContent = await page.getTextContent();
-    const pageText = textContent.items.map(item => item.str).join(' ');
-    
-    // Check if page is purely scanned image
-    if (pageText.trim().length < 40) {
-      scannedPagesCount++;
-      if (!isMobileDevice()) {
-        const viewport = page.getViewport({ scale: 1.5 });
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-        ocrImages.push(canvas.toDataURL('image/png'));
+    try {
+      const page = await pdf.getPage(i);
+      const textContent = await page.getTextContent();
+      
+      let lastY = null;
+      let pageText = '';
+      
+      for (const item of textContent.items) {
+        if (!item.str) continue;
+        if (lastY !== null && Math.abs(item.transform[5] - lastY) > 5) {
+          pageText += '\n';
+        } else if (pageText && !pageText.endsWith(' ') && !pageText.endsWith('\n')) {
+          pageText += ' ';
+        }
+        pageText += item.str;
+        lastY = item.transform[5];
       }
-    } else {
-      fullText += `\n\n## Page ${i}\n\n` + pageText;
+      
+      // Check if page is purely scanned image
+      if (pageText.trim().length < 40) {
+        scannedPagesCount++;
+        if (!isMobileDevice()) {
+          const viewport = page.getViewport({ scale: 1.5 });
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+          await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+          ocrImages.push(canvas.toDataURL('image/png'));
+        }
+      } else {
+        fullText += `\n\n## Page ${i}\n\n` + pageText.trim();
+      }
+    } catch (pageErr) {
+      console.warn(`Error reading page ${i}:`, pageErr);
+      fullText += `\n\n## Page ${i}\n\n*(Page text could not be extracted)*`;
     }
   }
   
