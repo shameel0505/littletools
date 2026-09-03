@@ -69,17 +69,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  gap: 1.25rem;
   padding: 1.1rem 1.4rem;
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .gpu-banner-left {
   flex: 1;
-  min-width: 260px;
+  min-width: 0;
 }
 
 .gpu-banner-title {
@@ -102,7 +104,8 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-shrink: 0;
+  max-width: 100%;
 }
 
 .btn-colab {
@@ -119,6 +122,7 @@
   border: 1px solid var(--border);
   transition: all 0.2s ease;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-colab:hover {
@@ -134,10 +138,14 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 320px;
+  max-width: 100%;
 }
 
 .tunnel-input {
-  width: 260px;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-md);
   background: var(--bg-app);
@@ -147,6 +155,7 @@
   font-size: 0.8rem;
   outline: none;
   transition: border-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .tunnel-input:focus {
@@ -157,12 +166,14 @@
   background: var(--accent-blue);
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.9rem;
   border-radius: var(--radius-md);
   font-weight: 600;
   font-size: 0.82rem;
   cursor: pointer;
   transition: opacity 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-connect:hover {
