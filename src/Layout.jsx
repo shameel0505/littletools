@@ -6,11 +6,17 @@ import './layout.css';
 
 export default function Layout() {
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
+
+  // Close mobile menu on route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   // Track SPA route changes in Google Analytics
   useEffect(() => {
@@ -39,7 +45,7 @@ export default function Layout() {
         </Link>
 
         <div className="header-right-controls">
-          <nav className="header-nav">
+          <nav className="header-nav desktop-nav">
             <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
             <Link to="/bg-remover" className={`nav-link ${location.pathname === '/bg-remover' ? 'active' : ''}`}>BG Remover</Link>
             <Link to="/thumbnail-tester" className={`nav-link ${location.pathname === '/thumbnail-tester' ? 'active' : ''}`}>Thumbnail Tester</Link>
@@ -47,19 +53,40 @@ export default function Layout() {
             <Link to="/cinegrade" className={`nav-link ${location.pathname === '/cinegrade' ? 'active' : ''}`}>CineGrade AI</Link>
           </nav>
 
-          <div className="header-divider"></div>
+          <div className="header-divider desktop-only"></div>
 
           <div className="header-actions">
             <button 
               className="theme-toggle" 
               onClick={() => setIsDarkMode(!isDarkMode)}
               title="Toggle theme"
+              aria-label="Toggle theme"
             >
               {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+
+            <button
+              className="mobile-menu-toggle"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              title="Toggle Menu"
+              aria-label="Toggle Menu"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
       </header>
+
+      {/* Mobile Nav Drawer */}
+      {mobileMenuOpen && (
+        <nav className="mobile-nav-drawer">
+          <Link to="/" className={`mobile-nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
+          <Link to="/bg-remover" className={`mobile-nav-link ${location.pathname === '/bg-remover' ? 'active' : ''}`}>BG Remover</Link>
+          <Link to="/thumbnail-tester" className={`mobile-nav-link ${location.pathname === '/thumbnail-tester' ? 'active' : ''}`}>Thumbnail Tester</Link>
+          <Link to="/doc-to-md" className={`mobile-nav-link ${location.pathname === '/doc-to-md' ? 'active' : ''}`}>Doc to MD</Link>
+          <Link to="/cinegrade" className={`mobile-nav-link ${location.pathname === '/cinegrade' ? 'active' : ''}`}>CineGrade AI</Link>
+        </nav>
+      )}
 
       {/* Main Content Area */}
       <main className="app-main">
