@@ -12,7 +12,8 @@ import {
   FileArchive, 
   Check, 
   FolderArchive,
-  CheckCircle
+  CheckCircle,
+  Smartphone
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { encode } from 'gpt-tokenizer';
@@ -35,6 +36,11 @@ export default function DocToMdTool() {
   const [tokensSaved, setTokensSaved] = useState(0);
   const [history, setHistory] = useState([]);
   const [toastMsg, setToastMsg] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768);
+  }, []);
 
   const showToast = (msg) => {
     setToastMsg(msg);
@@ -129,12 +135,10 @@ export default function DocToMdTool() {
         let fileTokens = 0;
         try {
           fileTokens = encode(parsedMd).length;
-        } catch (e) {
-          fileTokens = Math.round(parsedMd.length / 4);
-        }
+        } catch(e){}
 
         newResults.push({
-          id: `${Date.now()}-${i}`,
+          id: file.name + '-' + Date.now(),
           name: file.name,
           md: parsedMd,
           tokens: fileTokens,
@@ -143,9 +147,8 @@ export default function DocToMdTool() {
 
         saveToHistory(file.name, parsedMd);
       } catch (err) {
-        console.error(`Error parsing ${file.name}:`, err);
         newResults.push({
-          id: `${Date.now()}-${i}`,
+          id: file.name + '-' + Date.now(),
           name: file.name,
           md: `> **Error parsing ${file.name}:** ${err.message}`,
           tokens: 0,
@@ -252,6 +255,28 @@ export default function DocToMdTool() {
       <header className="doc-header">
         <h1>AI Context Optimizer</h1>
         <p>Convert single or multiple PDFs, Docs, and Images into clean Markdown for Large Language Models.</p>
+        
+        {isMobile && (
+          <div style={{
+            marginTop: '1.25rem',
+            padding: '1rem',
+            background: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid rgba(239, 68, 68, 0.3)',
+            borderRadius: '8px',
+            color: '#f87171',
+            fontSize: '0.85rem',
+            textAlign: 'left',
+            display: 'flex',
+            gap: '12px',
+            alignItems: 'flex-start'
+          }}>
+            <div style={{marginTop: '2px'}}><Smartphone size={18} /></div>
+            <div>
+              <strong style={{display: 'block', marginBottom: '4px'}}>Mobile PDF Warning</strong>
+              Due to extreme memory limits in mobile browsers, large PDF parsing is heavily restricted and may freeze. Word, Excel, and Text files will work perfectly. Please use a Desktop browser for reliable PDF extraction.
+            </div>
+          </div>
+        )}
       </header>
 
       <div className="doc-workspace">
