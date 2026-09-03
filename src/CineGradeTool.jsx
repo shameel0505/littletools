@@ -20,6 +20,8 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
+import AdBanner from './AdBanner';
 
 import './cineGradeTool.css';
 
@@ -298,6 +300,24 @@ export default function CineGradeTool() {
 
   return (
     <div className="app-container">
+      <Helmet>
+        <title>CineGrade AI — 1-Click Cinematic Neural Color Grading | LittleTools</title>
+        <meta name="description" content="Transform your photos and video footage with Hollywood-grade color palettes. Match iconic movie aesthetics like Dune, Blade Runner, and Oppenheimer, or use the 1-click AI Auto-Grader." />
+        <link rel="canonical" href="https://littletools.me/cinegrade" />
+        
+        {/* OpenGraph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://littletools.me/cinegrade" />
+        <meta property="og:title" content="CineGrade AI — 1-Click Cinematic Neural Color Grading" />
+        <meta property="og:description" content="Effortless Hollywood-grade color grading. Match iconic movie aesthetics, upload custom style references, or let the 1-click AI Auto-Grader perfect your shots." />
+        <meta property="og:site_name" content="LittleTools" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="CineGrade AI — 1-Click Cinematic Neural Color Grading" />
+        <meta name="twitter:description" content="AI Neural Color Grading for creators and cinematographers. Export 3D LUTs (.cube) with zero quality loss." />
+      </Helmet>
+
       {/* Header */}
       <header className="hero">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
@@ -793,6 +813,16 @@ export default function CineGradeTool() {
           </div>
         </motion.div>
       )}
+
+      {/* Standard Rectangular Ad Banner for AdSense */}
+      <div className="standard-ad-banner" style={{ marginTop: '48px' }}>
+        <span className="ad-label">Advertisement</span>
+        <AdBanner 
+          adSlot="8979592305" 
+          className="banner-ad-bottom"
+          style={{ display: 'block', width: '100%', maxWidth: '970px', height: '250px' }} 
+        />
+      </div>
     </div>
   );
 }
