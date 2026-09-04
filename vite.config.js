@@ -2,6 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import https from 'https'
 import http from 'http'
+import dns from 'dns'
+
+// Force Google & Cloudflare DNS to bypass local ISP blocks for .trycloudflare.com
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 // https://vitejs.dev/config/
 export default defineConfig({

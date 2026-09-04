@@ -85,12 +85,16 @@ export default function CineGradeTool() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 45000);
         
-        // Fetch directly from the GPU tunnel or local proxy fallback
-        const targetUrl = baseUrl ? `${baseUrl}/api/library` : '/api/library';
+        // Use Vite proxy in development to bypass CORS, but fetch directly in production
+        const isDev = import.meta.env.DEV;
+        const targetUrl = (baseUrl && isDev) ? '/tunnel-api/api/library' : (baseUrl ? `${baseUrl}/api/library` : '/api/library');
+        
         const res = await fetch(targetUrl, {
           signal: controller.signal,
           headers: {
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'bypass-tunnel-reminder': 'true',
+            ...(baseUrl && isDev ? { 'x-target-url': baseUrl } : {})
           }
         });
         
@@ -254,12 +258,16 @@ export default function CineGradeTool() {
         setProcessingStage(`Synthesizing 3D LUT from ${selectedRef.name}...`);
       }
 
-      const gradeEndpoint = baseUrl ? `${baseUrl}/api/grade` : `/tunnel-api/api/grade`;
-      const response = await fetch(gradeEndpoint, {
+      const isDev = import.meta.env.DEV;
+      const targetUrl = (baseUrl && isDev) ? '/tunnel-api/api/grade' : (baseUrl ? `${baseUrl}/api/grade` : '/api/grade');
+      
+      const response = await fetch(targetUrl, {
         method: 'POST',
         body: formData,
         headers: {
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'bypass-tunnel-reminder': 'true',
+          ...(baseUrl && isDev ? { 'x-target-url': baseUrl } : {})
         }
       });
 
@@ -274,10 +282,13 @@ export default function CineGradeTool() {
 
       while (true) {
         await new Promise(resolve => setTimeout(resolve, 1500));
-        const statusEndpoint = baseUrl ? `${baseUrl}/api/status/${taskId}` : `/tunnel-api/api/status/${taskId}`;
+        const isDev = import.meta.env.DEV;
+        const statusEndpoint = (baseUrl && isDev) ? `/tunnel-api/api/status/${taskId}` : (baseUrl ? `${baseUrl}/api/status/${taskId}` : `/api/status/${taskId}`);
         const statusRes = await fetch(statusEndpoint, {
           headers: {
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'bypass-tunnel-reminder': 'true',
+            ...(baseUrl && isDev ? { 'x-target-url': baseUrl } : {})
           }
         });
         if (!statusRes.ok) throw new Error(await statusRes.text());
