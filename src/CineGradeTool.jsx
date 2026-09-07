@@ -576,6 +576,42 @@ export default function CineGradeTool() {
                   </div>
 
                   <div 
+                    className={`style-preset-card ${autoStyle === 'cinestill' ? 'active' : ''}`}
+                    onClick={() => setAutoStyle('cinestill')}
+                  >
+                    <div className="style-preview-bar cinestill-gradient" />
+                    <div className="style-card-content">
+                      <span className="style-card-title">🎆 CineStill 800T</span>
+                      <span className="style-card-desc">Night neon aesthetic: Deep cobalt blues, rich tungsten warmth & halation glow.</span>
+                    </div>
+                    {autoStyle === 'cinestill' && <CheckCircle size={15} className="style-check-icon" />}
+                  </div>
+
+                  <div 
+                    className={`style-preset-card ${autoStyle === 'kodachrome' ? 'active' : ''}`}
+                    onClick={() => setAutoStyle('kodachrome')}
+                  >
+                    <div className="style-preview-bar kodachrome-gradient" />
+                    <div className="style-card-content">
+                      <span className="style-card-title">🎞️ Kodak Kodachrome 64</span>
+                      <span className="style-card-desc">Vintage 1970s National Geographic: Punchy contrast & saturated primary colors.</span>
+                    </div>
+                    {autoStyle === 'kodachrome' && <CheckCircle size={15} className="style-check-icon" />}
+                  </div>
+
+                  <div 
+                    className={`style-preset-card ${autoStyle === 'fuji_pro' ? 'active' : ''}`}
+                    onClick={() => setAutoStyle('fuji_pro')}
+                  >
+                    <div className="style-preview-bar fuji-pro-gradient" />
+                    <div className="style-card-content">
+                      <span className="style-card-title">🌸 Fujifilm Pro 400H</span>
+                      <span className="style-card-desc">Pastel editorial: Airy mint greens, cyan skies & luminous portrait tones.</span>
+                    </div>
+                    {autoStyle === 'fuji_pro' && <CheckCircle size={15} className="style-check-icon" />}
+                  </div>
+
+                  <div 
                     className={`style-preset-card ${autoStyle === 'eterna' || autoStyle === 'noir' ? 'active' : ''}`}
                     onClick={() => setAutoStyle('eterna')}
                   >
@@ -585,6 +621,18 @@ export default function CineGradeTool() {
                       <span className="style-card-desc">Muted Film Noir: Cool slate shadows, restrained saturation & moody Nordic tones.</span>
                     </div>
                     {(autoStyle === 'eterna' || autoStyle === 'noir') && <CheckCircle size={15} className="style-check-icon" />}
+                  </div>
+
+                  <div 
+                    className={`style-preset-card ${autoStyle === 'bleach_bypass' ? 'active' : ''}`}
+                    onClick={() => setAutoStyle('bleach_bypass')}
+                  >
+                    <div className="style-preview-bar bleach-gradient" />
+                    <div className="style-card-content">
+                      <span className="style-card-title">⚔️ Bleach Bypass (Silver)</span>
+                      <span className="style-card-desc">Gritty thriller: High micro-contrast, desaturated silver tones & metallic edge.</span>
+                    </div>
+                    {autoStyle === 'bleach_bypass' && <CheckCircle size={15} className="style-check-icon" />}
                   </div>
 
                   <div 

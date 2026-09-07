@@ -695,6 +695,22 @@
   background: linear-gradient(90deg, #0f172a 0%, #0284c7 40%, #10b981 75%, #ffffff 100%);
 }
 
+.cinestill-gradient {
+  background: linear-gradient(90deg, #05192d 0%, #0369a1 40%, #e11d48 75%, #fbbf24 100%);
+}
+
+.kodachrome-gradient {
+  background: linear-gradient(90deg, #18181b 0%, #dc2626 40%, #eab308 75%, #16a34a 100%);
+}
+
+.fuji-pro-gradient {
+  background: linear-gradient(90deg, #134e4a 0%, #2dd4bf 40%, #bae6fd 75%, #fdf4ff 100%);
+}
+
+.bleach-gradient {
+  background: linear-gradient(90deg, #000000 0%, #334155 45%, #94a3b8 80%, #f8fafc 100%);
+}
+
 .style-card-content {
   display: flex;
   flex-direction: column;
