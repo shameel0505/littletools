@@ -51,6 +51,8 @@ export default function Layout() {
             <Link to="/thumbnail-tester" className={`nav-link ${location.pathname === '/thumbnail-tester' ? 'active' : ''}`}>Thumbnail Tester</Link>
             <Link to="/doc-to-md" className={`nav-link ${location.pathname === '/doc-to-md' ? 'active' : ''}`}>Doc to MD</Link>
             <Link to="/cinegrade" className={`nav-link ${location.pathname === '/cinegrade' ? 'active' : ''}`}>CineGrade AI</Link>
+            <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>About</Link>
+            <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>Contact</Link>
           </nav>
 
           <div className="header-divider desktop-only"></div>
@@ -85,6 +87,8 @@ export default function Layout() {
           <Link to="/thumbnail-tester" className={`mobile-nav-link ${location.pathname === '/thumbnail-tester' ? 'active' : ''}`}>Thumbnail Tester</Link>
           <Link to="/doc-to-md" className={`mobile-nav-link ${location.pathname === '/doc-to-md' ? 'active' : ''}`}>Doc to MD</Link>
           <Link to="/cinegrade" className={`mobile-nav-link ${location.pathname === '/cinegrade' ? 'active' : ''}`}>CineGrade AI</Link>
+          <Link to="/about" className={`mobile-nav-link ${location.pathname === '/about' ? 'active' : ''}`}>About Us</Link>
+          <Link to="/contact" className={`mobile-nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>Contact Support</Link>
         </nav>
       )}
 
@@ -96,6 +100,8 @@ export default function Layout() {
       <footer className="app-footer">
         <p>&copy; {new Date().getFullYear()} LittleTools.me. All rights reserved.</p>
         <div className="footer-links">
+          <Link to="/about">About Us</Link>
+          <Link to="/contact">Contact Support</Link>
           <Link to="/privacy">Privacy Policy</Link>
           <Link to="/terms">Terms of Service</Link>
         </div>

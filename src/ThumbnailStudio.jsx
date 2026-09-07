@@ -460,6 +460,87 @@ export default function ThumbnailStudio() {
 
       </div>
 
+      {/* Educational Guide & CTR Optimization Section */}
+      <section className="tool-guide-section" style={{ marginTop: '3.5rem', background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '2.5rem', lineHeight: '1.7' }}>
+        <h2 style={{ fontSize: '1.7rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-primary)' }}>
+          The Complete Guide to YouTube Thumbnail Optimization & Click-Through Rate (CTR)
+        </h2>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+          Your thumbnail is the single most critical factor determining whether a viewer clicks your video or scrolls past it. In competitive YouTube feeds, high-performing creators design thumbnails that command visual attention within 0.3 seconds.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              1. The 3-Element Visual Rule
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Avoid cluttered compositions. The highest-converting thumbnails limit visual elements to three distinct focal points: a primary expressive subject (face or central object), a clear background context, and at most 3–4 bold words that evoke curiosity without repeating the title.
+            </p>
+          </div>
+
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              2. Timestamp & UI Safe Zones
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              The YouTube video player overlays a dark duration badge in the bottom-right corner and progress indicators along the bottom edge. Never place crucial text, logos, or expressive facial features in the bottom-right 25% of your canvas.
+            </p>
+          </div>
+
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              3. Contrast & Luminance Separation
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Use our <strong>B&W Contrast</strong> toggle to inspect luminance values. If your foreground subject blends into the background in grayscale, your thumbnail will get lost when viewers rapidly scan through dark mode feeds on mobile devices.
+            </p>
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }}>
+          Frequently Asked Questions (FAQ)
+        </h3>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              What is a good Click-Through Rate (CTR) on YouTube?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              According to YouTube Creator Studio analytics, average CTR across the platform typically ranges between 2% and 10%. However, broad appeal browse traffic (Home feed recommendations) often sees 4%–7%, whereas niche search queries can achieve 8%–15%+. A 1% increase in CTR can double or triple your total organic impressions.
+            </p>
+          </div>
+
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              Why do thumbnails look different on mobile vs. desktop?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Mobile feeds display thumbnails across the full screen width with stacked vertical layouts, while desktop feeds arrange videos in multi-column grids alongside sidebar recommendations. Over 70% of YouTube watch time originates on mobile devices, making mobile visual clarity your top optimization priority.
+            </p>
+          </div>
+
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              What is the "Squint Test" and how does the blur slider help?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              The Squint Test simulates how a human eye perceives visual hierarchy during fast scrolling. By increasing the blur slider on this tool, you can verify whether your primary subject and focal shape remain immediately recognizable even when fine details are stripped away.
+            </p>
+          </div>
+
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              Are my uploaded thumbnail graphics private?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Yes, 100%. All thumbnail previews, A/B comparisons, and diagnostics in LittleTools Thumbnail Studio are processed entirely within your browser's local memory using secure object URLs. Your unreleased artwork is never transmitted or stored on any server.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Official AdSense Footer Unit */}
       <div className="standard-ad-banner" style={{ marginTop: '2.5rem', textAlign: 'center' }}>
         <span className="ad-label" style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.5rem' }}>Advertisement</span>

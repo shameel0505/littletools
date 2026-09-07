@@ -38,6 +38,7 @@ export default function CineGradeTool() {
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('templates'); // 'templates', 'custom_ref', 'auto_grade'
+  const [autoStyle, setAutoStyle] = useState('blockbuster'); // 'blockbuster', 'golden_hour', 'noir', 'clean'
   
   const [selectedRef, setSelectedRef] = useState(null);
   const [customRefFile, setCustomRefFile] = useState(null);
@@ -49,6 +50,7 @@ export default function CineGradeTool() {
   // Grading Parameters
   const [intensity, setIntensity] = useState(100);
   const [protectSkin, setProtectSkin] = useState(true);
+  const [isLog, setIsLog] = useState(false);
   
   // Processing & Results
   const [isProcessing, setIsProcessing] = useState(false);
@@ -241,13 +243,15 @@ export default function CineGradeTool() {
       formData.append('target', targetFile);
       formData.append('intensity', (intensity / 100).toString());
       formData.append('protect_skin', protectSkin ? 'true' : 'false');
+      formData.append('is_log', isLog ? 'true' : 'false');
       formData.append('steps', '25');
       formData.append('size', '512');
       formData.append('ncc', 'true');
 
       if (activeTab === 'auto_grade') {
         formData.append('mode', 'auto');
-        setProcessingStage('Calculating Auto White Balance & Dynamic Range...');
+        formData.append('style', autoStyle);
+        setProcessingStage(`Applying 1-Click Pro ${autoStyle.replace('_', ' ').toUpperCase()} Color Science...`);
       } else if (activeTab === 'custom_ref') {
         formData.append('mode', 'reference');
         formData.append('reference', customRefFile);
@@ -538,30 +542,61 @@ export default function CineGradeTool() {
               <div className="tab-content auto-grade-tab">
                 <div className="auto-grade-banner">
                   <div className="auto-grade-hero-icon">
-                    <Sparkles size={32} />
+                    <Sparkles size={28} />
                   </div>
-                  <h3>1-Click Pro Colorist Pass</h3>
+                  <h3>Photographic Master Film Stock Emulation</h3>
                   <p>
-                    No reference image required! The AI autonomously analyzes your footage and applies professional studio mastering:
+                    Studio-grade Oklab subtractive color density. Select a physical 35mm film stock emulation:
                   </p>
-                  
-                  <div className="feature-checklist">
-                    <div className="feature-item">
-                      <CheckCircle size={16} className="check-icon" />
-                      <span><strong>Dynamic Gray-World Chromatic Adaptation:</strong> Automatically eliminates harsh green/orange color casts.</span>
+                </div>
+
+                <div className="style-preset-grid">
+                  <div 
+                    className={`style-preset-card ${autoStyle === 'vision3' || autoStyle === 'blockbuster' ? 'active' : ''}`}
+                    onClick={() => setAutoStyle('vision3')}
+                  >
+                    <div className="style-preview-bar blockbuster-gradient" />
+                    <div className="style-card-content">
+                      <span className="style-card-title">🎬 Kodak Vision3 500T (5219)</span>
+                      <span className="style-card-desc">Hollywood standard: Deep oceanic shadows, warm golden skin & soft highlights.</span>
                     </div>
-                    <div className="feature-item">
-                      <CheckCircle size={16} className="check-icon" />
-                      <span><strong>Dynamic Range Optimization:</strong> Soft Hermite knee roll-off recovers crushed shadows and blown highlights.</span>
+                    {(autoStyle === 'vision3' || autoStyle === 'blockbuster') && <CheckCircle size={15} className="style-check-icon" />}
+                  </div>
+
+                  <div 
+                    className={`style-preset-card ${autoStyle === 'portra' || autoStyle === 'golden_hour' ? 'active' : ''}`}
+                    onClick={() => setAutoStyle('portra')}
+                  >
+                    <div className="style-preview-bar golden-gradient" />
+                    <div className="style-card-content">
+                      <span className="style-card-title">🌅 Kodak Portra 400</span>
+                      <span className="style-card-desc">Warm & luminous: Creamy highlights, soft pastel roll-off & flattering complexion.</span>
                     </div>
-                    <div className="feature-item">
-                      <CheckCircle size={16} className="check-icon" />
-                      <span><strong>Filmic S-Curve Tone Mapping:</strong> Adds cinematic depth, punch, and rich contrast.</span>
+                    {(autoStyle === 'portra' || autoStyle === 'golden_hour') && <CheckCircle size={15} className="style-check-icon" />}
+                  </div>
+
+                  <div 
+                    className={`style-preset-card ${autoStyle === 'eterna' || autoStyle === 'noir' ? 'active' : ''}`}
+                    onClick={() => setAutoStyle('eterna')}
+                  >
+                    <div className="style-preview-bar noir-gradient" />
+                    <div className="style-card-content">
+                      <span className="style-card-title">🌑 Fuji Eterna 8543</span>
+                      <span className="style-card-desc">Muted Film Noir: Cool slate shadows, restrained saturation & moody Nordic tones.</span>
                     </div>
-                    <div className="feature-item">
-                      <CheckCircle size={16} className="check-icon" />
-                      <span><strong>Smart Memory-Color Vibrance:</strong> Enhances skies & foliage while locking natural skin tones.</span>
+                    {(autoStyle === 'eterna' || autoStyle === 'noir') && <CheckCircle size={15} className="style-check-icon" />}
+                  </div>
+
+                  <div 
+                    className={`style-preset-card ${autoStyle === 'commercial' || autoStyle === 'clean' ? 'active' : ''}`}
+                    onClick={() => setAutoStyle('commercial')}
+                  >
+                    <div className="style-preview-bar clean-gradient" />
+                    <div className="style-card-content">
+                      <span className="style-card-title">💎 Clean Commercial 35mm</span>
+                      <span className="style-card-desc">Crisp dynamic range, vivid memory colors & punchy true-to-life contrast.</span>
                     </div>
+                    {(autoStyle === 'commercial' || autoStyle === 'clean') && <CheckCircle size={15} className="style-check-icon" />}
                   </div>
                 </div>
               </div>
@@ -572,7 +607,7 @@ export default function CineGradeTool() {
           <motion.div className="tool-card target-panel" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }}>
             <h3>2. Upload Your Footage</h3>
             <p className="panel-subtitle">
-              Select the photo or video (.mp4, .mov, .dng, .cr2, .nef, .jpg, .png) you want to grade.
+              Select cinema footage (.r3d, .braw, .ari, .mp4, .mov, ProRes) or RAW photo (.dng, .cr2, .nef, .arw).
             </p>
 
             <div 
@@ -585,7 +620,7 @@ export default function CineGradeTool() {
                 type="file" 
                 ref={targetInputRef} 
                 style={{ display: 'none' }} 
-                accept="video/*,image/*,.dng,.cr2,.arw,.nef"
+                accept="video/*,image/*,.dng,.cr2,.arw,.nef,.r3d,.braw,.ari"
                 onChange={handleTargetSelect}
               />
               {targetPreview ? (
@@ -599,16 +634,31 @@ export default function CineGradeTool() {
                 <div className="dropzone-content">
                   <Film size={36} className="dropzone-icon" />
                   <h4>{targetFile.name}</h4>
-                  <p>Video selected ({(targetFile.size / (1024*1024)).toFixed(1)} MB)</p>
+                  <p>
+                    {['.r3d', '.braw', '.ari'].some(ext => targetFile.name.toLowerCase().endsWith(ext)) 
+                      ? 'Cinema RAW' 
+                      : 'Video'} selected ({(targetFile.size / (1024*1024)).toFixed(1)} MB)
+                  </p>
+                  {targetFile.size > 95 * 1024 * 1024 && customApiUrl.includes('trycloudflare.com') && (
+                    <p style={{ color: '#f59e0b', fontSize: '0.75rem', marginTop: '0.4rem' }}>
+                      ⚠️ Note: Cloudflare free tunnel limits single-file uploads to 100 MB.
+                    </p>
+                  )}
                 </div>
               ) : (
                 <div className="dropzone-content">
                   <UploadCloud size={36} className="dropzone-icon" />
-                  <h4>Drop Your Photo or Video Here</h4>
-                  <p>Supports RAW (DNG, CR2, NEF), JPEG, PNG, MP4, MOV</p>
+                  <h4>Drop Your Photo, Video, or Cinema RAW Here</h4>
+                  <p>Supports Cinema RAW (R3D, BRAW, ARI, DNG), ProRes, MP4, MOV, JPEG</p>
                 </div>
               )}
             </div>
+
+            {targetFile && ['.r3d', '.braw', '.ari'].some(ext => targetFile.name.toLowerCase().endsWith(ext)) && (
+              <div style={{ marginTop: '0.75rem', padding: '0.6rem 0.8rem', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: 'var(--radius-sm)', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                💡 <strong>Cinema RAW Workflow:</strong> For BRAW & R3D, export a still frame (PNG/TIFF/JPG) or ProRes clip from DaVinci Resolve or Premiere, grade it here, and export your <strong>.CUBE 3D LUT</strong> to apply to your raw timeline.
+              </div>
+            )}
 
             {/* Pro Tuning Controls */}
             <div className="tuning-section">
@@ -622,10 +672,22 @@ export default function CineGradeTool() {
                   <label>Grading Strength / Intensity</label>
                   <span className="slider-val">{intensity}%</span>
                 </div>
+                <div className="quick-intensity-pills">
+                  {[50, 75, 100, 125].map(val => (
+                    <button
+                      key={val}
+                      type="button"
+                      className={`quick-pill ${intensity === val ? 'active' : ''}`}
+                      onClick={() => setIntensity(val)}
+                    >
+                      {val === 50 ? '50% Subtle' : val === 75 ? '75% Natural' : val === 100 ? '100% Cinema' : '125% Heavy'}
+                    </button>
+                  ))}
+                </div>
                 <input 
                   type="range" 
                   min="10" 
-                  max="100" 
+                  max="150" 
                   value={intensity} 
                   onChange={(e) => setIntensity(Number(e.target.value))}
                 />
@@ -643,6 +705,22 @@ export default function CineGradeTool() {
                   type="checkbox" 
                   checked={protectSkin} 
                   onChange={(e) => setProtectSkin(e.target.checked)}
+                  className="toggle-checkbox"
+                />
+              </div>
+
+              <div className="control-toggle-group" style={{ marginTop: '0.6rem' }}>
+                <div className="toggle-info">
+                  <Film size={18} className="toggle-icon" />
+                  <div>
+                    <span className="toggle-label">Log / Flat Profile Normalization</span>
+                    <p className="toggle-desc">Expands dynamic range for Apple Log, Sony S-Log, Canon C-Log & flat video.</p>
+                  </div>
+                </div>
+                <input 
+                  type="checkbox" 
+                  checked={isLog} 
+                  onChange={(e) => setIsLog(e.target.checked)}
                   className="toggle-checkbox"
                 />
               </div>
@@ -831,6 +909,87 @@ export default function CineGradeTool() {
           </div>
         </motion.div>
       )}
+
+      {/* Educational Guide & Color Science Section */}
+      <section className="tool-guide-section" style={{ marginTop: '3.5rem', background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '2.5rem', lineHeight: '1.7' }}>
+        <h2 style={{ fontSize: '1.7rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-primary)' }}>
+          The Complete Guide to Cinematic Color Grading & 3D LUT Workflows
+        </h2>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+          Color grading transforms raw footage into stylized visual storytelling. Whether aiming for the high-contrast drama of a Hollywood blockbuster, the nostalgic warmth of golden hour sunlight, or the timeless elegance of classic film noir, understanding color science ensures professional, artifact-free results.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              1. Perceptual Tone Mapping & Quantile Matching
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Unlike simple RGB curves that crush shadows and clip highlights, CineGrade AI calculates cumulative distribution functions (CDF) in perceptual CIELAB and Oklab color spaces. This aligns shadow density and highlight roll-off while preserving natural dynamic range.
+            </p>
+          </div>
+
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              2. Vectorized Skin Tone Protection
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Aggressive teal-and-orange grades frequently turn human faces muddy or unnaturally orange. Our automated skin locus algorithm detects melanin chromaticity vectors and isolates facial tones, ensuring healthy, radiant complexion while styling backgrounds.
+            </p>
+          </div>
+
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              3. Industry-Standard .CUBE 3D LUTs
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Every grade generated by CineGrade can be exported as a 33x33x33 or 64x64x64 .CUBE 3D LUT. This allows filmmakers to import the exact look into DaVinci Resolve, Adobe Premiere Pro, Final Cut Pro, OBS Studio, and in-camera monitor displays.
+            </p>
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }}>
+          Frequently Asked Questions (FAQ)
+        </h3>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              How do I use the exported .CUBE LUT in Premiere Pro or DaVinci Resolve?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              In <strong>Adobe Premiere Pro</strong>, open the Lumetri Color panel, navigate to the <em>Creative</em> tab, click the <em>Look</em> dropdown, and select <em>Browse...</em> to load your downloaded .CUBE file. In <strong>DaVinci Resolve</strong>, open Project Settings &gt; Color Management &gt; Open LUT Folder, copy the .CUBE file into the directory, click <em>Update Lists</em>, and apply it to any node in your color tree.
+            </p>
+          </div>
+
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              What is the difference between Log footage and Standard Rec.709?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Log profiles (such as Sony S-Log3, Canon C-Log, or Blackmagic Film) record flat, desaturated images that preserve maximum dynamic range in highlights and shadows. Standard Rec.709 footage is ready for display with higher contrast. CineGrade works smoothly with both: apply our Auto-Grade presets directly to standard footage or use custom reference frames to match any log-graded cinema shot.
+            </p>
+          </div>
+
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              What video file types and resolutions are supported?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              CineGrade supports MP4, MOV, WebM, and AVI formats at resolutions up to 4K (3840x2160) at 60fps. Transcoding is accelerated with hardware GPU encoding (NVENC / QuickSync) with automatic software fallback for universal codec compatibility.
+            </p>
+          </div>
+
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              Can I adjust grading intensity?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Yes. Use the Quick Intensity buttons (50% Subtle, 75% Natural, 100% Cinema, 125% Heavy) or fine-tune with the slider to blend the grade smoothly between your source footage and the target aesthetic.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Standard Rectangular Ad Banner for AdSense */}
       <div className="standard-ad-banner" style={{ marginTop: '48px' }}>

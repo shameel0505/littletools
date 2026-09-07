@@ -114,8 +114,88 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Why Choose Client-Side Section */}
+      <section className="info-deepdive-section" style={{ marginTop: '3.5rem', background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '2.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)' }}>
+            Why 100% Client-Side Web Utilities Matter
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: '650px', margin: '0 auto', lineHeight: '1.6' }}>
+            Traditional web converters and AI photo tools upload your private files to cloud servers. LittleTools runs directly inside your browser sandbox.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.5rem', color: '#10b981' }}>🛡️ Zero Server Uploads</h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', lineHeight: '1.5' }}>
+              Your confidential photos, business PDFs, and video footage never leave your device. Processing occurs purely in local memory (RAM & GPU).
+            </p>
+          </div>
+
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.5rem', color: '#3b82f6' }}>⚡ Blazing Fast Speed</h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', lineHeight: '1.5' }}>
+              No upload queues, server throttling, or waiting for files to download. WebAssembly and WebGPU deliver instantaneous processing.
+            </p>
+          </div>
+
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.5rem', color: '#8b5cf6' }}>🚫 No Paywalls or Sign-Ups</h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', lineHeight: '1.5' }}>
+              Unlimited daily use with zero subscription fees, hidden credits, watermarks, or mandatory account registrations.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Platform FAQ Section */}
+      <section className="faq-section" style={{ marginTop: '3.5rem' }}>
+        <h2 style={{ fontSize: '1.8rem', fontWeight: 800, textAlign: 'center', marginBottom: '1.75rem', color: 'var(--text-primary)' }}>
+          Frequently Asked Questions
+        </h2>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '850px', margin: '0 auto' }}>
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1.25rem 1.5rem' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.4rem', color: 'var(--text-primary)' }}>
+              Are my images and documents really kept private?
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5', margin: 0 }}>
+              Yes, 100%. Our AI Background Remover, Doc-to-Markdown, and Thumbnail Tester tools run exclusively in your browser via WebAssembly, Web Workers, and WebGPU. You can even disconnect your internet after loading the page and the tools will still work completely offline.
+            </p>
+          </div>
+
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1.25rem 1.5rem' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.4rem', color: 'var(--text-primary)' }}>
+              What file types are supported across the platform?
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5', margin: 0 }}>
+              We support a wide array of media and document formats including JPEG, PNG, WEBP, PDF, DOCX, RAW (DNG, CR2, NEF), MP4, MOV, and AVI videos.
+            </p>
+          </div>
+
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1.25rem 1.5rem' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.4rem', color: 'var(--text-primary)' }}>
+              Can I use exported 3D LUTs in DaVinci Resolve or Premiere Pro?
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5', margin: 0 }}>
+              Yes! CineGrade AI outputs standard industry <code>.CUBE</code> 3D Look-Up Tables (33x33x33 and 64x64x64 lattices) that are immediately compatible with Adobe Premiere Pro, DaVinci Resolve, Final Cut Pro, OBS Studio, and Photoshop.
+            </p>
+          </div>
+
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1.25rem 1.5rem' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.4rem', color: 'var(--text-primary)' }}>
+              How does the Doc-to-Markdown tool optimize context for ChatGPT and LLMs?
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5', margin: 0 }}>
+              LLMs (like ChatGPT, Claude, and Gemini) process structured Markdown much more efficiently than raw binary PDFs. Our tool cleans up headers, strips extraneous formatting, and calculates real-time token counts using OpenAI's tokenizer so you can minimize token costs and maximize context retention.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Standard Rectangular Ad Placeholder */}
-      <div className="standard-ad-banner">
+      <div className="standard-ad-banner" style={{ marginTop: '3.5rem' }}>
         <span className="ad-label">Advertisement</span>
         <AdBanner 
           adSlot="8979592305" 

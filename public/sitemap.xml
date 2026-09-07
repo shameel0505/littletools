@@ -31,14 +31,26 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://littletools.me/about</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://littletools.me/contact</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://littletools.me/privacy</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://littletools.me/terms</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>

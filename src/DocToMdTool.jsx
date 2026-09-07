@@ -511,14 +511,85 @@ export default function DocToMdTool() {
         </main>
       </div>
       
-      {/* SEO Content Section */}
-      <section style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
-        <h2>Why convert documents to Markdown for AI?</h2>
-        <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '1rem' }}>
-          Large Language Models (LLMs) like ChatGPT, Claude, and Gemini process context highly efficiently when it is structured semantically. 
-          Standard PDFs and Word Documents contain enormous amounts of hidden formatting data, layout metadata, and unreadable binary code that wastes your token limits and confuses the AI.
-          By converting your Scanned PDFs, Excel spreadsheets, and DOCX files into clean, raw Markdown tables and headers, you minimize token usage and maximize the AI's comprehension of your data.
+      {/* SEO & Educational Guide Section */}
+      <section className="tool-guide-section" style={{ marginTop: '3.5rem', background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '2.5rem', lineHeight: '1.7' }}>
+        <h2 style={{ fontSize: '1.7rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-primary)' }}>
+          The Complete Guide to Structuring Documents as Markdown for LLMs & AI Workflows
+        </h2>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+          Modern Large Language Models (LLMs) like GPT-4o, Claude 3.5 Sonnet, and Google Gemini process textual context with optimal accuracy when input data is semantically organized. Converting raw PDFs, Word documents, and spreadsheets into lightweight Markdown ensures maximum comprehension and minimal token overhead.
         </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              1. Token Optimization & Cost Reduction
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Standard PDF and DOCX files contain extensive binary styling, font embeddings, XML schema headers, and layout instructions. When pasted or extracted naively, they waste thousands of prompt tokens. Clean Markdown cuts context token consumption by 40% to 70%, drastically lowering API costs and extending your usable context window.
+            </p>
+          </div>
+
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              2. Semantic Integrity for RAG & Embeddings
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Retrieval-Augmented Generation (RAG) pipelines rely on clean chunking. Converting multi-column layouts and tables into native Markdown tables (`| Col 1 | Col 2 |`) preserves relational database relationships and prevents text disjoints that degrade vector search accuracy.
+            </p>
+          </div>
+
+          <div style={{ padding: '1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+              3. Zero-Knowledge Client-Side Privacy
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Legal contracts, proprietary codebases, and sensitive financial reports should never be sent to untrusted conversion servers. LittleTools DocToMarkdown runs PDF.js, Mammoth.js, SheetJS, and Tesseract OCR locally in your browser memory — your documents never touch the internet.
+            </p>
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }}>
+          Frequently Asked Questions (FAQ)
+        </h3>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              How does converting PDF or DOCX to Markdown save LLM tokens?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Rich documents contain invisible style tags, font definitions, and positioning markers. Our parser strips away this presentation overhead, retaining only semantic Markdown elements (headings, bold emphasis, lists, and tables), ensuring that 100% of your prompt tokens represent actual semantic information.
+            </p>
+          </div>
+
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              Can this tool extract text from scanned PDFs or images?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Yes. If a dropped document contains scanned image pages without selectable text layers, our built-in in-browser OCR engine (powered by WebAssembly Tesseract) automatically recognizes characters and structures them as readable Markdown.
+            </p>
+          </div>
+
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              What is the difference between Merged Output and Separate Files?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Merged Output combines all uploaded documents into a single sequential Markdown file separated by horizontal dividers — ideal for feeding an entire folder of research papers or documentation into a single AI chat session. Separate Files allows you to inspect each document individually and download a organized .ZIP archive.
+            </p>
+          </div>
+
+          <div style={{ padding: '1rem 1.25rem', background: 'var(--bg-app)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <h4 style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+              Are my files safe and private?
+            </h4>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', margin: 0 }}>
+              Yes. LittleTools uses a strict zero-knowledge client-side architecture. All parsing, OCR, token calculation, and ZIP archiving take place entirely on your device using WebAssembly. No files are uploaded to any server.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Official AdSense Footer Unit */}
