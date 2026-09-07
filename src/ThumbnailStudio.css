@@ -104,17 +104,17 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
-  .yt-studio.light & { color: #0f0f0f; }
 }
+.yt-studio.light .studio-heading { color: #0f0f0f; }
 
 .layout-pills {
   display: flex;
   background: var(--bg-app);
-  .yt-studio.light & { background: #f1f5f9; }
   border: 1px solid var(--studio-border);
   border-radius: var(--radius-md);
   padding: 3px;
 }
+.yt-studio.light .layout-pills { background: #f1f5f9; }
 
 .pill-btn {
   display: flex;
@@ -124,25 +124,25 @@
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  .yt-studio.light & { color: #64748b; }
   font-size: 0.8rem;
   font-weight: 500;
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s;
 }
+.yt-studio.light .pill-btn { color: #64748b; }
 
 .pill-btn:hover {
   color: var(--text-primary);
-  .yt-studio.light & { color: #0f0f0f; }
 }
+.yt-studio.light .pill-btn:hover { color: #0f0f0f; }
 
 .pill-btn.active {
   background: var(--studio-surface);
   color: var(--text-primary);
-  .yt-studio.light & { background: #ffffff; color: #0f0f0f; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
+.yt-studio.light .pill-btn.active { background: #ffffff; color: #0f0f0f; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
 .studio-bar-right {
   display: flex;
@@ -152,7 +152,6 @@
 
 .diag-btn {
   background: var(--bg-app);
-  .yt-studio.light & { background: #f1f5f9; color: #64748b; }
   border: 1px solid var(--studio-border);
   color: var(--text-secondary);
   padding: 0.4rem 0.8rem;
@@ -162,6 +161,7 @@
   cursor: pointer;
   transition: all 0.2s;
 }
+.yt-studio.light .diag-btn { background: #f1f5f9; color: #64748b; }
 
 .diag-btn.active {
   background: #3ea6ff;
@@ -174,17 +174,17 @@
   align-items: center;
   gap: 0.5rem;
   background: var(--bg-app);
-  .yt-studio.light & { background: #f1f5f9; }
   border: 1px solid var(--studio-border);
   padding: 0.4rem 0.8rem;
   border-radius: var(--radius-sm);
 }
+.yt-studio.light .blur-control { background: #f1f5f9; }
 
 .control-label {
   font-size: 0.75rem;
   color: var(--text-secondary);
-  .yt-studio.light & { color: #64748b; }
 }
+.yt-studio.light .control-label { color: #64748b; }
 
 .slider-input {
   width: 80px;
@@ -195,8 +195,8 @@
   font-size: 0.75rem;
   font-family: monospace;
   color: var(--text-primary);
-  .yt-studio.light & { color: #0f0f0f; }
 }
+.yt-studio.light .slider-val { color: #0f0f0f; }
 
 .icon-toggle-btn {
   display: flex;
@@ -207,15 +207,16 @@
   border-radius: 50%;
   border: 1px solid var(--studio-border);
   background: var(--bg-app);
-  .yt-studio.light & { background: #f1f5f9; color: #0f0f0f; }
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s;
 }
+.yt-studio.light .icon-toggle-btn { background: #f1f5f9; color: #0f0f0f; }
+
 .icon-toggle-btn:hover {
   background: var(--studio-surface);
-  .yt-studio.light & { background: #e2e8f0; }
 }
+.yt-studio.light .icon-toggle-btn:hover { background: #e2e8f0; }
 
 /* Inputs & Settings Bar */
 .input-deck {
@@ -254,7 +255,6 @@
   padding: 0.75rem;
   border: 1px dashed var(--studio-border);
   background: var(--bg-app);
-  .yt-studio.light & { background: #f8fafc; border-color: #cbd5e1; color: #475569; }
   color: var(--text-secondary);
   border-radius: var(--radius-md);
   font-size: 0.85rem;
@@ -262,6 +262,7 @@
   cursor: pointer;
   transition: all 0.2s;
 }
+.yt-studio.light .upload-trigger-btn { background: #f8fafc; border-color: #cbd5e1; color: #475569; }
 
 .upload-trigger-btn:hover {
   border-color: #3ea6ff;
@@ -277,11 +278,11 @@
 .variant-switch {
   display: flex;
   background: var(--bg-app);
-  .yt-studio.light & { background: #f1f5f9; }
   border: 1px solid var(--studio-border);
   border-radius: var(--radius-md);
   padding: 3px;
 }
+.yt-studio.light .variant-switch { background: #f1f5f9; }
 
 .var-btn {
   flex: 1;
@@ -289,20 +290,20 @@
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  .yt-studio.light & { color: #64748b; }
   font-size: 0.8rem;
   font-weight: 500;
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s;
 }
+.yt-studio.light .var-btn { color: #64748b; }
 
 .var-btn.selected {
   background: var(--studio-surface);
   color: var(--text-primary);
-  .yt-studio.light & { background: #ffffff; color: #0f0f0f; }
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
+.yt-studio.light .var-btn.selected { background: #ffffff; color: #0f0f0f; }
 
 .sample-chips {
   display: flex;
@@ -315,12 +316,11 @@
 .sample-label {
   font-size: 0.75rem;
   color: var(--text-tertiary);
-  .yt-studio.light & { color: #94a3b8; }
 }
+.yt-studio.light .sample-label { color: #94a3b8; }
 
 .chip-btn {
   background: var(--bg-app);
-  .yt-studio.light & { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
   border: 1px solid var(--studio-border);
   padding: 0.2rem 0.5rem;
   border-radius: 999px;
@@ -329,6 +329,7 @@
   cursor: pointer;
   transition: all 0.2s;
 }
+.yt-studio.light .chip-btn { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
 
 .chip-btn:hover {
   background: var(--studio-surface);
@@ -358,8 +359,8 @@
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--text-secondary);
-  .yt-studio.light & { color: #475569; }
 }
+.yt-studio.light .field-header label, .yt-studio.light .small-field label { color: #475569; }
 
 .char-counter {
   font-size: 0.7rem;
@@ -372,7 +373,6 @@
 
 .title-input, .sub-input {
   background: var(--bg-app);
-  .yt-studio.light & { background: #f8fafc; border-color: #cbd5e1; color: #0f0f0f; }
   border: 1px solid var(--studio-border);
   color: var(--text-primary);
   padding: 0.65rem;
@@ -381,6 +381,7 @@
   font-size: 0.85rem;
   transition: border-color 0.2s;
 }
+.yt-studio.light .title-input, .yt-studio.light .sub-input { background: #f8fafc; border-color: #cbd5e1; color: #0f0f0f; }
 
 .title-input:focus, .sub-input:focus {
   outline: none;
@@ -946,13 +947,14 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
-  .yt-studio.light & { color: #0f0f0f; }
 }
+.yt-studio.light .toolkit-label { color: #0f0f0f; }
+
 .toolkit-sub {
   font-size: 0.85rem;
   color: var(--text-secondary);
-  .yt-studio.light & { color: #64748b; }
 }
+.yt-studio.light .toolkit-sub { color: #64748b; }
 
 .toolkit-grid {
   display: grid;
@@ -989,8 +991,9 @@
   font-weight: 700;
   font-size: 0.9rem;
   color: var(--text-primary);
-  .yt-studio.light & { color: #0f0f0f; }
 }
+.yt-studio.light .card-brand { color: #0f0f0f; }
+
 .card-badge {
   font-size: 0.65rem;
   font-weight: 700;
@@ -1006,10 +1009,10 @@
 .card-desc {
   font-size: 0.8rem;
   color: var(--text-secondary);
-  .yt-studio.light & { color: #475569; }
   line-height: 1.4;
   flex: 1;
 }
+.yt-studio.light .card-desc { color: #475569; }
 .card-footer {
   display: flex;
   justify-content: space-between;
